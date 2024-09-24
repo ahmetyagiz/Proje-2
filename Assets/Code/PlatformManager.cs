@@ -6,12 +6,12 @@ public class PlatformManager : MonoBehaviour
     private GameObject[] Platforms;
     private Transform platformParent;
     private int platformIndex;
+    private Transform previousOne;
 
     [SerializeField] MeshSlicer meshSlicer; // Zenject ile ele alýnacak
     [SerializeField] SlicerPositionSetter slicerPositionSetter;
-
+    [SerializeField] SoundManager soundManager;
     [HideInInspector] public UnityEvent platformChangeEvent;
-
     private void Start()
     {
         platformParent = GameObject.FindGameObjectWithTag("PlatformParent").transform;
@@ -19,6 +19,8 @@ public class PlatformManager : MonoBehaviour
 
         // Ýlk platform açýlýr
         Platforms[0].SetActive(true);
+
+        previousOne = GameObject.FindGameObjectWithTag("Ground").transform;
     }
 
     private void AddAllPlatformsToArray()
@@ -49,12 +51,30 @@ public class PlatformManager : MonoBehaviour
             return;
         }
 
-
+        previousOne = Platforms[platformIndex].transform;
         Platforms[IncreasePlatformIndex()].SetActive(true);
         Platforms[platformIndex].GetComponent<MeshFilter>().mesh = slicerPositionSetter.lowerHullMesh;
         Platforms[platformIndex].GetComponent<BoxCollider>().center = slicerPositionSetter.boxColliderCenter;
         Platforms[platformIndex].GetComponent<BoxCollider>().size = slicerPositionSetter.boxColliderSize;
-
+        IsPlatformFit();
         platformChangeEvent.Invoke();
+    }
+
+    public bool IsPlatformFit()
+    {
+        return (Mathf.Abs(previousOne.position.x - slicerPositionSetter.innerHullCenter.x) < 0.45f);
+    }
+
+    public void ThresholdHandler()
+    {
+        if (IsPlatformFit())
+        {
+            Debug.Log("Neredeyse tam oldu");
+            soundManager.PlayNote();
+        }
+        else
+        {
+            soundManager.SetPitchToDefault();
+        }
     }
 }

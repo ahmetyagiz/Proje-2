@@ -8,6 +8,7 @@ public class MeshSlicer : MonoBehaviour
     [SerializeField] private float fallForce = 5f; // Düþme kuvveti
     [SerializeField] private Material platformMat; // Kesilen platformun materyali
     [SerializeField] SlicerPositionSetter slicerPositionSetter; // Zenject ile yapýlacak
+    [SerializeField] PlatformManager platformManager; // Zenject ile yapýlacak
 
     void Update()
     {
@@ -35,7 +36,7 @@ public class MeshSlicer : MonoBehaviour
 
     void SliceObject()
     {
-        if (objectToSlice == null)
+        if (objectToSlice == null/* || platformManager.IsPlatformFit()*/)
         {
             return;
         }

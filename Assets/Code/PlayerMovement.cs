@@ -1,13 +1,15 @@
 using DG.Tweening;
 using UnityEngine;
-//using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
+    private Animator animator;
+
     [SerializeField] private float moveSpeed;
     [SerializeField] PlatformManager platformManager;
     [SerializeField] SlicerPositionSetter slicerPositionSetter;
+    private bool isLevelCompleted;
 
     private void OnEnable()
     {
@@ -22,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -31,11 +34,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        rb.velocity = new Vector3(0, rb.velocity.y, moveSpeed);
+        if (!isLevelCompleted)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, moveSpeed);
+        }
     }
 
     private void ChangeXPosition()
     {
         transform.DOMoveX(slicerPositionSetter.innerHullCenter.x, 0.5f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("WinTrigger"))
+        {
+            PlayWinAnimation();
+        }
+    }
+
+    private void PlayWinAnimation()
+    {
+        isLevelCompleted = true;
+        animator.SetTrigger("Dance");
     }
 }

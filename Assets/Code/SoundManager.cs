@@ -13,5 +13,16 @@ public class SoundManager : MonoBehaviour
     public void PlayNote()
     {
         audioSource.PlayOneShot(perfectNote);
+        IncreasePitch();
+    }
+
+    public void IncreasePitch()
+    {
+        audioSource.pitch += 0.1f;
+    }
+
+    public void SetPitchToDefault()
+    {
+        audioSource.pitch = 1f;
     }
 }
