@@ -1,7 +1,10 @@
 using UnityEngine;
 
+public enum PlatformStartDirection { Left, Right };
+
 public class PlatformController : MonoBehaviour
 {
+    [SerializeField] private PlatformStartDirection platformStartDirection;
     public float speed = 5f; // Platformun hýzý
     public float leftLimit = -4f; // Sol sýnýr
     public float rightLimit = 4f; // Sað sýnýr
@@ -11,13 +14,13 @@ public class PlatformController : MonoBehaviour
     void Start()
     {
         // Platform baþlangýçta rastgele saða veya sola hareket edecek
-        if (Random.Range(0, 2) == 0)
+        if (platformStartDirection == PlatformStartDirection.Left)
         {
-            moveDirection = Vector3.right; // Saða hareket et
+            moveDirection = Vector3.left; // Sola hareket et
         }
         else
         {
-            moveDirection = Vector3.left; // Sola hareket et
+            moveDirection = Vector3.right; // Saða hareket et
         }
     }
 

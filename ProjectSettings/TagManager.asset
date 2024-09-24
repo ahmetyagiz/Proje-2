@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlatformParent
   - Platform
+  - WinTrigger
   layers:
   - Default
   - TransparentFX

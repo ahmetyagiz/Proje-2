@@ -168,6 +168,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshSlicer: {fileID: 1425431942}
   slicerPositionSetter: {fileID: 1139413770}
+  platformChangeEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &249659383
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +743,7 @@ MonoBehaviour:
   lowerHullMesh: {fileID: 0}
   boxColliderCenter: {x: 0, y: 0, z: 0}
   boxColliderSize: {x: 0, y: 0, z: 0}
+  innerHullCenter: {x: 0, y: 0, z: 0}
 --- !u!4 &1243360574 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3465114178351414532, guid: 628eb11ff7db7f54c91b01cb1b38c49c, type: 3}
@@ -939,6 +943,14 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1723231319919793536, guid: 49f562658e5d14d49a9a7541f295aac0, type: 3}
+      propertyPath: platformManager
+      value: 
+      objectReference: {fileID: 190918361}
+    - target: {fileID: 1723231319919793536, guid: 49f562658e5d14d49a9a7541f295aac0, type: 3}
+      propertyPath: slicerPositionSetter
+      value: 
+      objectReference: {fileID: 1139413770}
     - target: {fileID: 1723231319919793537, guid: 49f562658e5d14d49a9a7541f295aac0, type: 3}
       propertyPath: m_Constraints
       value: 112

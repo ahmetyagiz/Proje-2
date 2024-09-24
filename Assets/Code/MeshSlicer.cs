@@ -1,5 +1,6 @@
 using UnityEngine;
 using EzySlice;
+using UnityEngine.Android;
 
 public class MeshSlicer : MonoBehaviour
 {
@@ -60,6 +61,10 @@ public class MeshSlicer : MonoBehaviour
         slicerPositionSetter.boxColliderCenter = kesilmisInnerHull.GetComponent<BoxCollider>().center;
         slicerPositionSetter.boxColliderSize = kesilmisInnerHull.GetComponent<BoxCollider>().size;
         slicerPositionSetter.lowerHullMesh = kesilmisInnerHull.GetComponent<MeshFilter>().mesh;
+
+        // Kesilen objenin pivotu bozuldugu icin pivotunu tekrar hesaplanýr. Karakter platformun merkez pivotuna gitmelidir.
+        Bounds bounds = kesilmisInnerHull.GetComponent<Collider>().bounds;
+        slicerPositionSetter.innerHullCenter = bounds.center;
     }
 
     public SlicedHull Cut(GameObject obj, Material mat = null)

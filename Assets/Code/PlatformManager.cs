@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlatformManager : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class PlatformManager : MonoBehaviour
 
     [SerializeField] MeshSlicer meshSlicer; // Zenject ile ele alýnacak
     [SerializeField] SlicerPositionSetter slicerPositionSetter;
+
+    [HideInInspector] public UnityEvent platformChangeEvent;
+
     private void Start()
     {
         platformParent = GameObject.FindGameObjectWithTag("PlatformParent").transform;
@@ -45,9 +49,12 @@ public class PlatformManager : MonoBehaviour
             return;
         }
 
+
         Platforms[IncreasePlatformIndex()].SetActive(true);
         Platforms[platformIndex].GetComponent<MeshFilter>().mesh = slicerPositionSetter.lowerHullMesh;
         Platforms[platformIndex].GetComponent<BoxCollider>().center = slicerPositionSetter.boxColliderCenter;
         Platforms[platformIndex].GetComponent<BoxCollider>().size = slicerPositionSetter.boxColliderSize;
+
+        platformChangeEvent.Invoke();
     }
 }

@@ -22,7 +22,7 @@ namespace EzySlice {
 		}
 
 		public GameObject CreateOuterHull(GameObject original, Material crossSectionMat) {
-			GameObject newObject = CreateUpperHull();
+			GameObject newObject = CreateOuterHull();
 
 			if (newObject != null) {
 				newObject.transform.localPosition = original.transform.localPosition;
@@ -56,12 +56,12 @@ namespace EzySlice {
 			return newObject;
 		}
 
-		public GameObject CreateLowerHull(GameObject original) {
+		public GameObject CreateInnerrHull(GameObject original) {
 			return CreateInnerHull(original, null);
 		}
 
 		public GameObject CreateInnerHull(GameObject original, Material crossSectionMat) {
-			GameObject newObject = CreateLowerHull();
+			GameObject newObject = CreateInnerHull();
 
 			if (newObject != null) {
 				newObject.transform.localPosition = original.transform.localPosition;
@@ -99,7 +99,7 @@ namespace EzySlice {
          * Generate a new GameObject from the upper hull of the mesh
          * This function will return null if upper hull does not exist
          */
-        public GameObject CreateUpperHull() {
+        public GameObject CreateOuterHull() {
             return CreateEmptyObject("Outer_Hull", outer_hull);
         }
 
@@ -107,8 +107,8 @@ namespace EzySlice {
 		 * Generate a new GameObject from the Lower hull of the mesh
 		 * This function will return null if lower hull does not exist
 		 */
-		public GameObject CreateLowerHull() {
-			return CreateEmptyObject("Lower_Hull", inner_hull);
+		public GameObject CreateInnerHull() {
+			return CreateEmptyObject("Inner_Hull", inner_hull);
 		}
 
 		public Mesh upperHull {
