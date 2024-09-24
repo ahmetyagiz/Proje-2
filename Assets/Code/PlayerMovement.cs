@@ -10,8 +10,13 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, moveSpeed * Time.deltaTime);
+        Movement();
+    }
+
+    private void Movement()
+    {
+        rb.velocity = new Vector3(0, rb.velocity.y, moveSpeed);
     }
 }

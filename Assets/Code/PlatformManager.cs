@@ -6,6 +6,8 @@ public class PlatformManager : MonoBehaviour
     private Transform platformParent;
     private int platformIndex;
 
+    [SerializeField] MeshSlicer meshSlicer; // Zenject ile ele alýnacak
+    [SerializeField] SlicerPositionSetter slicerPositionSetter;
     private void Start()
     {
         platformParent = GameObject.FindGameObjectWithTag("PlatformParent").transform;
@@ -44,5 +46,8 @@ public class PlatformManager : MonoBehaviour
         }
 
         Platforms[IncreasePlatformIndex()].SetActive(true);
+        Platforms[platformIndex].GetComponent<MeshFilter>().mesh = slicerPositionSetter.lowerHullMesh;
+        Platforms[platformIndex].GetComponent<BoxCollider>().center = slicerPositionSetter.boxColliderCenter;
+        Platforms[platformIndex].GetComponent<BoxCollider>().size = slicerPositionSetter.boxColliderSize;
     }
 }

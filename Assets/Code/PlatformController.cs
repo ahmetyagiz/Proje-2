@@ -26,7 +26,7 @@ public class PlatformController : MonoBehaviour
         if (isMoving)
         {
             // Platformu hareket ettir
-            transform.Translate(moveDirection * speed * Time.deltaTime);
+            transform.Translate(speed * Time.deltaTime * moveDirection);
 
             // Platform sýnýrlarý geçtiðinde yön deðiþtir
             if (transform.position.x >= rightLimit && moveDirection == Vector3.right)

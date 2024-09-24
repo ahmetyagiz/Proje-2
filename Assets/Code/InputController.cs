@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    [SerializeField] private PlatformManager platformManager;
+    [SerializeField] private PlatformManager platformManager; // Bu kýsým zenject ile yapýlacak
 
     void Update()
     {
