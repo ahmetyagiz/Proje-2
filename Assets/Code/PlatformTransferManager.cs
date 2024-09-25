@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -34,6 +33,7 @@ public class PlatformTransferManager : MonoBehaviour
     {
         InitializeTransferValues();
     }
+
     void InitializeTransferValues()
     {
         innerHullCenter = Vector3.zero;
@@ -91,7 +91,6 @@ public class PlatformTransferManager : MonoBehaviour
     {
         if (IsPlatformFit())
         {
-            Debug.Log("Tam oldu");
             ComboSoundManager._instance.PlayNote();
         }
         else

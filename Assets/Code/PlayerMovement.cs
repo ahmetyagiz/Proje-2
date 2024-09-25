@@ -9,12 +9,25 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] private float moveSpeed;
 
-    #region OnEnable, OnDisable, Start, FixedUpdate
-    private void OnEnable() => PlatformTransferManager._instance.platformChangeEvent.AddListener(ChangeXPosition);
-    private void OnDisable() => PlatformTransferManager._instance.platformChangeEvent.RemoveListener(ChangeXPosition);
-    private void Start() => rb = GetComponent<Rigidbody>();
-    private void FixedUpdate() => MovePlayer();
-    #endregion
+    private void OnEnable()
+    {
+        PlatformTransferManager._instance.platformChangeEvent.AddListener(ChangeXPosition);
+    }
+
+    public void OnDisable()
+    {
+        PlatformTransferManager._instance.platformChangeEvent.RemoveListener(ChangeXPosition);
+    }
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
+    }
 
     private void MovePlayer()
     {
@@ -24,5 +37,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void ChangeXPosition() => transform.DOMoveX(PlatformTransferManager._instance.innerHullCenter.x, 0.5f);
+    private void ChangeXPosition()
+    {
+        transform.DOMoveX(PlatformTransferManager._instance.innerHullCenter.x, 0.5f);
+    }
 }

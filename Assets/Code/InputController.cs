@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public class InputController : MonoBehaviour
 {
+    [Header("Slicers")]
     [SerializeField] private MeshSlicer leftSlicer;
     [SerializeField] private MeshSlicer rightSlicer;
 

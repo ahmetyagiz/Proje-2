@@ -5,6 +5,7 @@ using UnityEngine;
 /// </summary>
 public class SlicerPositionSetter : MonoBehaviour
 {
+    [Header("Slicers")]
     [SerializeField] private Transform leftSlicer;
     [SerializeField] private Transform rightSlicer;
 
