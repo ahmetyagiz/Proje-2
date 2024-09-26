@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 /// <summary>
 /// Bu kod karakterin animasyonlarýný yönetir.
@@ -6,6 +7,13 @@ using UnityEngine;
 public class PlayerAnimationManager : MonoBehaviour
 {
     private Animator animator;
+    private GameManager _gameManager;
+
+    [Inject]
+    public void Construct(GameManager gameManager)
+    {
+        _gameManager = gameManager;
+    }
 
     private void Start()
     {
@@ -17,7 +25,7 @@ public class PlayerAnimationManager : MonoBehaviour
         if (other.CompareTag("WinTrigger"))
         {
             // Seviye tamamlandý
-            GameManager._instance.SetLevelCompleted();
+            _gameManager.SetLevelCompleted();
             PlayWinAnimation();
         }
     }

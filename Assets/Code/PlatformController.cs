@@ -2,6 +2,9 @@ using UnityEngine;
 
 public enum PlatformStartDirection { Left, Right };
 
+/// <summary>
+/// Bu kod platformlarýn hareketini saðlar. Enum ile baþlangýçta hangi yöne gideceði belirlenir.
+/// </summary>
 public class PlatformController : MonoBehaviour
 {
     [SerializeField] private PlatformStartDirection platformStartDirection;

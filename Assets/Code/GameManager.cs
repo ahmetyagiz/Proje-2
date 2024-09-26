@@ -7,23 +7,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private bool isLevelCompleted;
-    public static GameManager _instance;
 
     [Header("Win Lose Panels")]
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject losePanel;
-
-    private void Awake()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        // Tekil örneði bu bileþen olarak ayarla
-        _instance = this;
-    }
 
     public bool IsLevelCompleted()
     {
@@ -44,12 +31,15 @@ public class GameManager : MonoBehaviour
 
     public void RestartLevel()
     {
+        Time.timeScale = 1f;
+
+        // Baþka seviye olmadýðý için þimdilik ayný sahneyi tekrar baþlatýyorum
         SceneManager.LoadScene(0);
     }
 
     public void StartNextLevel()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
-        Time.timeScale = 1;
     }
 }

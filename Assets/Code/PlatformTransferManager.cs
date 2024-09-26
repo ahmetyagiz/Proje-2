@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
+/// <summary>
+/// Bu kod platformlar arasý verilerin transferini saðlar
+/// </summary>
 public class PlatformTransferManager : MonoBehaviour
 {
     [Header("Current Mesh Transfer Informations")]
@@ -14,20 +18,19 @@ public class PlatformTransferManager : MonoBehaviour
 
     [HideInInspector] public UnityEvent platformChangeEvent;
 
-    public static PlatformTransferManager _instance;
+    private GameManager _gameManager;
+    private ComboSoundManager _comboSoundManager;
+    private PlatformInformationManager _platformInformationManager;
 
-    #region Awake, Start
-    private void Awake()
+    [Inject]
+    public void Construct(GameManager gameManager, ComboSoundManager comboSoundManager, PlatformInformationManager platformInformationManager)
     {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        // Tekil örneði bu bileþen olarak ayarla
-        _instance = this;
+        _gameManager = gameManager;
+        _comboSoundManager = comboSoundManager;
+        _platformInformationManager = platformInformationManager;
     }
+
+    #region Start
 
     private void Start()
     {
@@ -63,11 +66,11 @@ public class PlatformTransferManager : MonoBehaviour
     {
         ThresholdHandler();
 
-        if (!PlatformInformationManager._instance.IsArrayCompleted())
+        if (!_platformInformationManager.IsArrayCompleted())
         {
             // platformIndex'i 1 arttýr
-            PlatformInformationManager._instance.IncreasePlatformIndex();
-            PlatformInformationManager._instance.GetCurrentPlatform().SetActive(true);
+            _platformInformationManager.IncreasePlatformIndex();
+            _platformInformationManager.GetCurrentPlatform().SetActive(true);
             previousInnerHullCenter = innerHullCenter;
             SetMeshAndColliders();
             platformChangeEvent.Invoke();
@@ -76,9 +79,9 @@ public class PlatformTransferManager : MonoBehaviour
 
     void SetMeshAndColliders()
     {
-        PlatformInformationManager._instance.GetCurrentPlatform().GetComponent<MeshFilter>().mesh = innerHullMesh;
-        PlatformInformationManager._instance.GetCurrentPlatform().GetComponent<BoxCollider>().center = boxColliderCenter;
-        PlatformInformationManager._instance.GetCurrentPlatform().GetComponent<BoxCollider>().size = boxColliderSize;
+        _platformInformationManager.GetCurrentPlatform().GetComponent<MeshFilter>().mesh = innerHullMesh;
+        _platformInformationManager.GetCurrentPlatform().GetComponent<BoxCollider>().center = boxColliderCenter;
+        _platformInformationManager.GetCurrentPlatform().GetComponent<BoxCollider>().size = boxColliderSize;
     }
 
     bool IsPlatformFit()
@@ -91,11 +94,11 @@ public class PlatformTransferManager : MonoBehaviour
     {
         if (IsPlatformFit())
         {
-            ComboSoundManager._instance.PlayNote();
+            _comboSoundManager.PlayNote();
         }
         else
         {
-            ComboSoundManager._instance.SetPitchToDefault();
+            _comboSoundManager.SetPitchToDefault();
         }
     }
 }

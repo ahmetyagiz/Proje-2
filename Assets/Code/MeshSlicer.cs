@@ -1,5 +1,6 @@
 using UnityEngine;
 using EzySlice;
+using Zenject;
 
 /// <summary>
 /// Bu kod býçaðýn meshi kesmesini yönetir
@@ -10,6 +11,14 @@ public class MeshSlicer : MonoBehaviour
     [SerializeField] private float fallForce = 5f; // Düþme kuvveti
     [SerializeField] private Material platformMat; // Kesilen platformun materyali
     [SerializeField] private SlicerPositionSetter slicerPositionSetter;
+
+    private PlatformTransferManager _platformTransferManager;
+
+    [Inject]
+    public void Construct(PlatformTransferManager platformTransferManager)
+    {
+        _platformTransferManager = platformTransferManager;
+    }
 
     #region OnTriggerEnter, OnTriggerExit
     private void OnTriggerEnter(Collider other)
@@ -61,12 +70,12 @@ public class MeshSlicer : MonoBehaviour
     {
         // Kesilen objenin pivotu bozuldugu icin pivotu tekrar hesaplanýr. Karakter platformun merkez pivotuna gitmelidir.
         Bounds bounds = kesilmisInnerHull.GetComponent<Collider>().bounds;
-        PlatformTransferManager._instance.innerHullCenter = bounds.center;
+        _platformTransferManager.innerHullCenter = bounds.center;
 
         // Collider ve meshi bir sonraki platforma eklemek icin kaydet
-        PlatformTransferManager._instance.SetMesh(kesilmisInnerHull.GetComponent<MeshFilter>().mesh);
-        PlatformTransferManager._instance.SetBoxColliderSize(kesilmisInnerHull.GetComponent<BoxCollider>().size);
-        PlatformTransferManager._instance.SetBoxColliderCenter(kesilmisInnerHull.GetComponent<BoxCollider>().center);
+        _platformTransferManager.SetMesh(kesilmisInnerHull.GetComponent<MeshFilter>().mesh);
+        _platformTransferManager.SetBoxColliderSize(kesilmisInnerHull.GetComponent<BoxCollider>().size);
+        _platformTransferManager.SetBoxColliderCenter(kesilmisInnerHull.GetComponent<BoxCollider>().center);
     }
 
     public SlicedHull Cut(GameObject obj, Material mat = null)

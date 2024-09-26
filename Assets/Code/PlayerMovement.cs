@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using Zenject;
 
 /// <summary>
 /// Bu kod karakterin hareketini saðlar.
@@ -9,14 +10,24 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] private float moveSpeed;
 
+    private PlatformTransferManager _platformTransferManager;
+    private GameManager _gameManager;
+
+    [Inject]
+    public void Construct(PlatformTransferManager platformTransferManager, GameManager gameManager)
+    {
+        _platformTransferManager = platformTransferManager;
+        _gameManager = gameManager;
+    }
+
     private void OnEnable()
     {
-        PlatformTransferManager._instance.platformChangeEvent.AddListener(ChangeXPosition);
+        _platformTransferManager.platformChangeEvent.AddListener(ChangeXPosition);
     }
 
     public void OnDisable()
     {
-        PlatformTransferManager._instance.platformChangeEvent.RemoveListener(ChangeXPosition);
+        _platformTransferManager.platformChangeEvent.RemoveListener(ChangeXPosition);
     }
 
     private void Start()
@@ -31,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        if (!GameManager._instance.IsLevelCompleted())
+        if (!_gameManager.IsLevelCompleted())
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, moveSpeed);
         }
@@ -39,6 +50,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void ChangeXPosition()
     {
-        transform.DOMoveX(PlatformTransferManager._instance.innerHullCenter.x, 0.5f);
+        transform.DOMoveX(_platformTransferManager.innerHullCenter.x, 0.5f);
     }
 }

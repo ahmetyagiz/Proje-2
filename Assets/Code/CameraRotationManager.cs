@@ -1,11 +1,24 @@
 using Cinemachine;
 using UnityEngine;
+using Zenject;
 
+/// <summary>
+/// Bu kod seviye sonunda kameranýn dönmesini saðlar.
+/// </summary>
 public class CameraRotationManager : MonoBehaviour
 {
-    CinemachineVirtualCamera virtualCamera;
-    CinemachineFramingTransposer framingTransposer;
     [SerializeField] private Transform player;
+    [SerializeField] private float rotationSpeed;
+
+    private CinemachineVirtualCamera virtualCamera;
+    private CinemachineFramingTransposer framingTransposer;
+    private GameManager _gameManager;
+
+    [Inject]
+    public void Construct(GameManager gameManager)
+    {
+        _gameManager = gameManager;
+    }
 
     private void Start()
     {
@@ -15,7 +28,7 @@ public class CameraRotationManager : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager._instance.IsLevelCompleted())
+        if (_gameManager.IsLevelCompleted())
         {
             // Player'ý biraz döndürüyorum yoksa dönmüyor
             player.transform.Rotate(new Vector3(0, 0.01f, 0));
@@ -24,7 +37,7 @@ public class CameraRotationManager : MonoBehaviour
             framingTransposer.m_TrackedObjectOffset = new Vector3(0, 1, 0);
 
             // Kamerayý Y ekseninde döndür
-            transform.Rotate(new Vector3(0, -50, 0) * Time.deltaTime, Space.World);
+            transform.Rotate(new Vector3(0, -rotationSpeed, 0) * Time.deltaTime, Space.World);
         }
     }
 }
