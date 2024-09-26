@@ -33,13 +33,14 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        // Baþka seviye olmadýðý için þimdilik ayný sahneyi tekrar baþlatýyorum
         SceneManager.LoadScene(0);
     }
 
     public void StartNextLevel()
     {
         Time.timeScale = 1f;
+
+        // Baþka seviye olmadýðý için þimdilik ayný sahneyi tekrar baþlatýyorum
         SceneManager.LoadScene(0);
     }
 }
